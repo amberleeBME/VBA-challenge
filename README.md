@@ -1,4 +1,4 @@
-# VBA-challenge
+# The VBA of Wall Street
 ## Objective
 Create a script that will loop through all the stocks for one year and output the following Information:
    * The ticker symbol
