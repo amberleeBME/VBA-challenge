@@ -26,50 +26,64 @@ Sub Stock():
     Dim tick As String
     Dim yDiff As Double
     Dim pDiff As Double
-    Dim totalVol As Long
-    
+    Dim totalVol As Double
+    Dim outRow As Integer
     ' --------------------------------------------
     ' LOOP THROUGH ALL SHEETS
     ' --------------------------------------------
-    'For Each ws In Worksheets
-
+    For Each ws In Worksheets
+        ' Set current worksheet
+        Set curr_ws = Worksheets(ws.Name)
+        
         ' --------------------------------------------
         ' SETUP OUTPUT TABLES
         ' --------------------------------------------
         
         'Output Table 1: Column Headers
-        Range("I1").Value = "Ticker"
-        Range("J1").Value = "Yearly Change"
-        Range("K1").Value = "Percent Change"
-        Range("L1").Value = "Total Stock Volume"
+        curr_ws.Range("I1").Value = "Ticker"
+        curr_ws.Range("J1").Value = "Yearly Change"
+        curr_ws.Range("K1").Value = "Percent Change"
+        curr_ws.Range("L1").Value = "Total Stock Volume"
         
         'Output Table 2: Row Headers
-        Range("O2").Value = "Greatest % Increase"
-        Range("O3").Value = "Greatest % Decrease"
-        Range("O4").Value = "Greatest Total Volume"
+        curr_ws.Range("O2").Value = "Greatest % Increase"
+        curr_ws.Range("O3").Value = "Greatest % Decrease"
+        curr_ws.Range("O4").Value = "Greatest Total Volume"
         
         'Output Table 2: Column Headers
-        Range("P1").Value = "Ticker"
-        Range("Q1").Value = "Value"
+        curr_ws.Range("P1").Value = "Ticker"
+        curr_ws.Range("Q1").Value = "Value"
+        
+        ' Autofit to display data
+        curr_ws.Columns("I:Q").AutoFit
         
         ' --------------------------------------------
         ' INITIALIZE VARIABLES AND DETERMINE LAST ROW
         ' --------------------------------------------
         
         'Initialize variables using values from first record (values from row '2' of current spreadsheet)
-        tick = Range("A2").Value
-        yDiff = Range("C2").Value
-        pDiff = Range("C2").Value
-        totalVol = Range("G2").Value
+        outRow = 2
+        totalVol = curr_ws.Range("G2").Value
         
         'Determine the last row in the worksheet
-        LastRow = Cells(Rows.Count, 1).End(xlUp).Row
+        LastRow = curr_ws.Cells(Rows.Count, 1).End(xlUp).Row
         
         ' --------------------------------------------
-        ' ITERATE THROUGH EACH ROW
+        ' LOOP THROUGH EACH ROW
         ' --------------------------------------------
-        'For i = 2 To LastRow
-            
-        'Next i
-    'Next ws
+        For i = 2 To LastRow
+            tick = curr_ws.Cells(i, 1).Value
+            newTick = curr_ws.Cells(i + 1, 1).Value
+            newVol = curr_ws.Cells(i + 1, 7).Value
+            If tick <> newTick Then
+                curr_ws.Cells(outRow, 9).Value = tick
+                curr_ws.Cells(outRow, 12).Value = totalVol
+                tick = newTick
+                totalVol = newVol
+                outRow = outRow + 1
+            Else
+                totalVol = totalVol + newVol
+            End If
+        Next i
+    Next ws
 End Sub
