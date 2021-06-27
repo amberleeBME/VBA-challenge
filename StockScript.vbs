@@ -19,15 +19,14 @@
 Sub Stock():
 
     ' --------------------------------------------
-    ' VARIABLES
+    ' DEFINE VARIABLES
     ' --------------------------------------------
-    
-    'Define variables
     Dim tick As String
-    Dim yDiff As Double
+    Dim yOpen As Double
     Dim pDiff As Double
     Dim totalVol As Double
     Dim outRow As Integer
+    
     ' --------------------------------------------
     ' LOOP THROUGH ALL SHEETS
     ' --------------------------------------------
@@ -36,7 +35,7 @@ Sub Stock():
         Set curr_ws = Worksheets(ws.Name)
         
         ' --------------------------------------------
-        ' SETUP OUTPUT TABLES
+        ' SETUP TABLE HEADERS
         ' --------------------------------------------
         
         'Output Table 1: Column Headers
@@ -58,31 +57,54 @@ Sub Stock():
         curr_ws.Columns("I:Q").AutoFit
         
         ' --------------------------------------------
-        ' INITIALIZE VARIABLES AND DETERMINE LAST ROW
+        ' INITIALIZE AND DETERMINE LAST ROW
         ' --------------------------------------------
-        
-        'Initialize variables using values from first record (values from row '2' of current spreadsheet)
-        outRow = 2
+        yOpen = curr_ws.Range("C2").Value
         totalVol = curr_ws.Range("G2").Value
+        outRow = 2
         
         'Determine the last row in the worksheet
         LastRow = curr_ws.Cells(Rows.Count, 1).End(xlUp).Row
         
         ' --------------------------------------------
-        ' LOOP THROUGH EACH ROW
+        ' LOOP THROUGH ALL ROWS
         ' --------------------------------------------
         For i = 2 To LastRow
-            tick = curr_ws.Cells(i, 1).Value
-            newTick = curr_ws.Cells(i + 1, 1).Value
-            newVol = curr_ws.Cells(i + 1, 7).Value
-            If tick <> newTick Then
-                curr_ws.Cells(outRow, 9).Value = tick
-                curr_ws.Cells(outRow, 12).Value = totalVol
-                tick = newTick
-                totalVol = newVol
-                outRow = outRow + 1
-            Else
+            tick = curr_ws.Cells(i, 1).Value                ' Current ticker
+            newTick = curr_ws.Cells(i + 1, 1).Value         ' New ticker name
+            newOpen = curr_ws.Cells(i + 1, 3).Value         ' New opening price
+            yClose = curr_ws.Cells(i + 1, 6).Value          ' New closing price
+            newVol = curr_ws.Cells(i + 1, 7).Value          ' New volume
+            
+            ' If the new ticker names are the same, then add to total
+            If tick = newTick Then
                 totalVol = totalVol + newVol
+            Else
+                ' Find yearly change
+                yDiff = curr_ws.Cells(i, 6).Value - yOpen
+                
+                ' If necessary, change opening price to 1 to avoid dividing by 0 errror.
+                If yOpen = 0 Then
+                    yOpen = 1
+                End If
+                
+                ' Find percent change
+                pDiff = yDiff / yOpen
+                
+                ' Output current ticker name, yearly change, percent change, and total volume
+                curr_ws.Cells(outRow, 9).Value = tick
+                curr_ws.Cells(outRow, 10).Value = yDiff
+                curr_ws.Cells(outRow, 11).Value = pDiff
+                curr_ws.Cells(outRow, 12).Value = totalVol
+                
+                ' Reset total and opening price for new ticker
+                totalVol = newVol
+                yOpen = newOpen
+                
+                ' next output row
+                outRow = outRow + 1
+                
+                
             End If
         Next i
     Next ws
