@@ -8,7 +8,7 @@
 '           * The total stock volume of the stock.
 ' 2. Have the script apply conditional formatting that will highlight positive change in green and negative change in red.
 ' -------
-' *BONUS*
+' *Bonus*
 ' -------
 ' 3. The script should also output:
 '           * The stock with the Greatest % increase
@@ -101,9 +101,27 @@ Sub Stock():
                 totalVol = newVol
                 yOpen = newOpen
                 
+                ' --------------------------------------------
+                ' FORMAT CELLS
+                ' --------------------------------------------
+                ' *Color Formatting*
+                ' -------
+                ' If yearly change is negative, then red
+                ' Else if yearly change is positive, then green
+                If yDiff < 0 Then
+                    curr_ws.Cells(outRow, 10).Interior.ColorIndex = 3
+                ElseIf yDiff > 0 Then
+                    curr_ws.Cells(outRow, 10).Interior.ColorIndex = 4
+                Else
+                End If
+                
+                ' -------
+                ' *Number Formatting*
+                ' -------
+                ' If yearly change is negative, then red
+                curr_ws.Cells(outRow, 11).NumberFormat = "0.00%"
                 ' next output row
                 outRow = outRow + 1
-                
                 
             End If
         Next i
