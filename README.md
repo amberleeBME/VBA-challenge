@@ -1,7 +1,7 @@
 # The VBA of Wall Street: Stock Market Analyst
 ## Description
 
-***
+
 
 The VBA script loops through all the stocks for one year and outputs:
 * The ticker symbol
@@ -14,11 +14,12 @@ The VBA script loops through all the stocks for one year and outputs:
  * *The stock with the "Greatest % decrease"*
  * *The stock with the "Greatest total volume"*
 
-## Results
-
 ***
 
+## Results
+
 The results below were generated using the Multi Year Stock data set.
+
 
 | 2014    |                       | Ticker Symbol |     Value     |
 | -----:  |     :-------------    | :------------ |     ---:      |
