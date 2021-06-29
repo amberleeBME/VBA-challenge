@@ -35,7 +35,7 @@ The results below were generated using the Multi Year Stock data set.
 |         | Greatest Total Volume | BAC           | 21,277,761,900|
 
 ![2015 Results Screenshot](/images/output_2015.png)
-| 2014    |                       | Ticker Symbol |     Value     |
+| 2016    |                       | Ticker Symbol |     Value     |
 | -----:  |     :-------------    | :------------ |     ---:      |
 |         | Greatest % Increase   | SD            | 11675.00%     |
 |         | Greatest % Decrease   | DYN.W         | -91.49%       |
