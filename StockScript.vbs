@@ -1,5 +1,5 @@
 ' --------------------------------------------
-' INSTRUCTIONS
+' DELIVERABLES
 ' --------------------------------------------
 ' 1. Loop through all the stocks for one year and output the following:
 '           * The ticker symbol
