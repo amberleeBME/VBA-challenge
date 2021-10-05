@@ -1,15 +1,12 @@
 ' --------------------------------------------
 ' INSTRUCTIONS
 ' --------------------------------------------
-' 1. Create a script that will loop through all the stocks for one year and output the following:
+' 1. Loop through all the stocks for one year and output the following:
 '           * The ticker symbol
 '           * Yearly change from opening price at the beginning of a given year to the closing price at the end of that year.
 '           * The percent change from opening price at the beginning of a given year to the closing price at the end of that year.
 '           * The total stock volume of the stock.
 ' 2. Have the script apply conditional formatting that will highlight positive change in green and negative change in red.
-' -------
-' *Bonus*
-' -------
 ' 3. The script should also output:
 '           * The stock with the Greatest % increase
 '           * The stock with the Greatest % decrease
